@@ -1,0 +1,56 @@
+#map {
+    display: block;
+    position: absolute; 
+    display: inline-block;
+    top:4%; 
+    bottom:0; 
+    left:1%; 
+    right: 0;
+    width: 35%;
+    height: 45%;
+    border:solid 1px;
+    border-radius:20px;
+}
+#grafico_1 {
+    display: block;
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+    left: 40%;
+    width: 50%;
+    height: 500px;
+}
+#grafico_2 {
+    display: block;
+    position: relative;
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0;
+    top: 0%;
+    width: 52%;
+    height: 630px;
+    background-color: white;
+}
+#tabela_1{
+    position: relative;
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0;
+    width: 40%;
+    top: 100%;
+    left: 5%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-radius: 20px;
+    border: 2px solid rgb(0, 0, 0);
+}
+th, td {
+padding: 20px;
+}
+.material-tabela{
+    color: #008dc0;
+    cursor: pointer;
+}

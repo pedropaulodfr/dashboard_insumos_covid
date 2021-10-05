@@ -1,0 +1,140 @@
+<title>Estado: {{sigla}}</title>
+
+<!-- Styles --->
+<link rel="stylesheet" href="css/respiradores.css">
+
+<h1 id="sigla" style="display: none;">{{sigla}}</h1>
+<h1 id="dadosQuantResp" style="display: none;">{{dadosQuantResp}}</h1>
+<h1 id="dadosFornecedor" style="display: none;">{{dadosFornecedor}}</h1>
+<h1 id="dadosFornecedorValor" style="display: none;">{{dadosFornecedorValor}}</h1>
+<h1 id="dadosFreqRespirador" style="display: none;">{{dadosFreqRespirador}}</h1>
+<h1 id="dadosFreqDatas" style="display: none;">{{dadosFreqDatas}}</h1>
+
+<script>
+    var dadosFornecedor = document.getElementById("dadosFornecedor").innerHTML;
+    var dadosFornecedorValor = document.getElementById("dadosFornecedorValor").innerHTML;
+    var dadosFreqRespirador = document.getElementById("dadosFreqRespirador").innerHTML;
+
+    dadosFornecedor = JSON.parse(dadosFornecedor);
+    dadosFornecedorValor = JSON.parse(dadosFornecedorValor);
+    dadosFreqRespirador = JSON.parse(dadosFreqRespirador);
+    
+    var dadosGraficoFornecedor = [];
+    for(let i = 0; i < dadosFornecedor.length; i++){
+        let fornecedor = dadosFornecedor[i].FORNECEDOR;
+        let quantidade = dadosFornecedor[i].QUANTIDADE;
+
+        dadosGraficoFornecedor.push({
+            "fornecedor": fornecedor,
+            "quantidade": quantidade
+        });
+    };
+
+    var dadosGraficoFornecedorValor = [];
+    for(let i = 0; i < dadosFornecedorValor.length; i++){
+        let fornecedor = dadosFornecedorValor[i].FORNECEDOR;
+        let valor = dadosFornecedorValor[i].VALOR;
+
+        dadosGraficoFornecedorValor.push({
+            "fornecedor": fornecedor,
+            "valor": valor
+        });
+    };
+
+    var dadosGraficoFrequencia = [];
+    for(let i = 0; i < dadosFreqRespirador.length; i++){
+        let data = dadosFreqRespirador[i].DATA;
+        let quantidade = dadosFreqRespirador[i].QUANTIDADE;
+
+        dadosGraficoFrequencia.push({
+            "data": data,
+            "quantidade": quantidade
+        });
+    };
+
+</script>
+
+<div id="map"></div>
+<script src="mapas/estado.js"></script>
+
+<!-- GRÁFICOS -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/moonrisekingdom.js"></script>
+
+<script src="graficos_respiradores/grafico_1.js"></script>
+<script src="graficos_respiradores/grafico_2.js"></script>
+<script src="graficos_respiradores/grafico_3.js"></script>
+
+<script>
+    var dadosFreqDatas = document.getElementById("dadosFreqDatas").innerHTML;
+
+    dadosFreqDatas = JSON.parse(dadosFreqDatas);
+
+    function ConstrutorTabela(){
+        //DISPLAY QUANTIDADE TOTAL DE RESPIRADORES
+        let quantResp = document.getElementById("dadosQuantResp").innerHTML;
+        quantResp = JSON.parse(quantResp);
+
+        document.getElementById("displayTabela").innerHTML = quantResp[0].QUANTIDADE;  
+
+        // TABELA  DIAS QUE MAIS FORAM ENTREGUES RESPIRADORES
+        for(let i = 0; i < 8; i++){
+            let quantidade = dadosFreqDatas[i].QUANTIDADE;
+            let data = dadosFreqDatas[i].DATA;
+
+            let date = new Date(data);
+            data = (date.getDate() + 1) + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
+
+            // Cria elementos e o corpo da tabela
+            var linha = document.createElement("tr");
+            var campo_quantidade = document.createElement("td");
+            var campo_data = document.createElement("td");
+
+            //Style
+            campo_quantidade.className = "respirador-tabela";
+
+            // Cria textos
+            var texto_quantidade = document.createTextNode(quantidade);
+            var texto_data = document.createTextNode(data);
+
+            // Vincula texto as linhas
+            campo_quantidade.appendChild(texto_quantidade);
+            campo_data.appendChild(texto_data);
+
+            // Vincula linhas ao corpo da tabela
+            linha.appendChild(campo_quantidade);
+            linha.appendChild(campo_data);
+
+            // Vincula corpo da tabela a tabela
+            document.getElementById("corpoTabela").appendChild(linha);
+        }      
+    }
+    window.onload = ConstrutorTabela;
+</script>
+
+
+<!-- HTML -->
+<div id="quantidadeDisplay">
+    <center>
+        <h1 style="font-size: 17px">Quantidade de respiradores distribuídos ao {{sigla}}</h1>
+        <h2 id="displayTabela"></h2>
+    </center>
+</div>
+<div id="grafico_1"></div>
+<div id="grafico_2"></div>
+<div id="grafico_3"></div>
+<div id="tabela_1">
+    <table id="tabelaFrequenciaDatas">
+        <caption style="font-size: 17px"><b>Dias que mais foram distribuídos respiradores</b></caption>
+        <thead>
+            <th scope="col">Quantidade de respiradores</th>
+            <th scope="col">Data</th>
+        </thead>
+        <tbody id="corpoTabela">
+            
+        </tbody>
+    </table>
+</div>

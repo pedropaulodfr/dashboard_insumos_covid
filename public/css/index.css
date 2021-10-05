@@ -1,0 +1,132 @@
+#chart_div{
+    cursor: pointer;
+}
+#chart_div path {
+    stroke-width: 1; /* Controlar tamanho da linha de fronteira dos estados */
+    stroke: white; /* alterar a cor */
+    }
+#div-check{
+  position: absolute;
+  top: 5%;
+  left: 83%;
+  background: rgb(175, 175, 175);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 18px;
+  line-height: 2;
+  width: 180px;
+  height: 130px;
+  margin: auto;
+  padding:10px;
+  margin-top: 10px;
+  text-align: left;
+  cursor: pointer;
+  border-radius:7px;
+  -moz-border-radius:7px;-webkit-border-radius: 7px;
+  -webkit-box-shadow: 0px 2px 6px 0px rgba(78, 78, 78, 0.75);
+  -moz-box-shadow:    0px 2px 6px 0px rgba(78, 78, 78, 0.75);
+  box-shadow:         0px 2px 6px 0px rgba(78, 78, 78, 0.75);
+}
+#combobox{
+    background: rgb(175, 175, 175);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(26, 26, 26);
+    width:450px;
+    margin: auto;
+    padding:10px;
+    margin-top: 10px;
+    text-align:center;
+    border-radius:7px;
+    -moz-border-radius:7px;-webkit-border-radius: 7px;
+    -webkit-box-shadow: 0px 2px 6px 0px rgba(78, 78, 78, 0.75);
+    -moz-box-shadow:    0px 2px 6px 0px rgba(78, 78, 78, 0.75);
+    box-shadow:         0px 2px 6px 0px rgba(78, 78, 78, 0.75);
+}
+.option-select{
+    cursor: pointer;
+}
+#grafico_1{
+    display: inline-block;
+    width: 100%;
+    height: 490px;
+}
+#div-grafico_1{
+    display: inline-block;
+    margin-left: 5%;
+    padding: 3%;
+    width: 35%;
+    height: 400px;
+}
+#div-grafico_2{
+    display: inline-block;
+    margin-left: 5%;
+    padding: 3%;
+    width: 40%;
+    height: 400px;
+}
+#grafico_2 {
+    display: inline-block;
+    width: 100%;
+    height: 500px;
+}
+#div-grafico_3{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 700px;
+}
+#grafico_3 {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 5%;
+    width: 100%;
+    height: 700px;
+}
+#grafico_4 {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    height: 700px;
+}
+#grafico_5 {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    height: 400px;
+}
+#div-grafico_4{
+    width: 80%;
+    height: 700px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+#div-grafico_5{
+    width: 80%;
+    height: 700px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+.conteudo-principal{
+    font-size: 36px;
+    font-family: "Segoe UI";
+    text-align: center;
+    color: #0fa3da;
+    text-decoration: overline;
+}
+.spinner{
+    border: 6px solid rgba(226, 244, 252, 0.75);
+    border-left-color: rgb(15, 163, 218);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+} 
+.radio-button{
+    cursor: pointer;
+}
+@keyframes spin{
+    to { transform: rotate(360deg);}
+}
+
+

@@ -1,0 +1,120 @@
+<title>Estado: {{sigla}}</title>
+
+<!-- Styles -->
+<link rel="stylesheet" href="css/materiais.css">
+
+<h1 id="sigla" style="display: none;">{{sigla}}</h1>
+<h1 id="dadosMaterial" style="display: none;">{{dadosMaterial}}</h1>
+<h1 id="dadosData" style="display: none;">{{dadosData}}</h1>
+<h1 id="dadosFrequenciaMaterial" style="display: none;">{{dadosFreqMaterial}}</h1>
+
+<script>
+    var dadosMateriais = document.getElementById("dadosMaterial").innerHTML;
+    var dadosDatas = document.getElementById("dadosData").innerHTML;
+
+    dadosMateriais = JSON.parse(dadosMateriais);
+    dadosDatas = JSON.parse(dadosDatas);
+
+    var dadosGraficoMaterial = [];
+    for(let i = 0; i < dadosMateriais.length; i++){
+        let material = dadosMateriais[i].QMaterial;
+        let quantidade = dadosMateriais[i].Quantidade;
+
+        dadosGraficoMaterial.push({
+            "material": material,
+            "quantidade": quantidade
+        });
+    };
+
+    var dadosGraficoData = [];
+    for(let i = 0; i < dadosDatas.length; i++){
+        let data = dadosDatas[i].Dt;
+        let quantidade = dadosDatas[i].Quant;
+
+        dadosGraficoData.push({
+            "date": data,
+            "value": quantidade
+        })
+    };
+
+</script>
+
+
+<div id="map"></div>
+<script src="mapas/estado.js"></script>
+
+
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+
+<!-- GRÁFICOS -->
+<script src="graficos_materiais/grafico_1.js"></script>
+<script src="graficos_materiais/grafico_2.js"></script>
+
+
+<script>
+    var dadosFreqMateriais = document.getElementById("dadosFrequenciaMaterial").innerHTML;
+
+    dadosFreqMateriais = JSON.parse(dadosFreqMateriais);
+
+    function ConstrutorTabela(){
+        for(let i = 0; i < dadosFreqMateriais.length; i++){
+        let material = dadosFreqMateriais[i].Material;
+        let quantidade = dadosFreqMateriais[i].QuantMaterial;
+        let data = dadosFreqMateriais[i].Dt;
+
+        let date = new Date(data);
+        data = (date.getDate() + 1) + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
+
+        // Cria elementos e o corpo da tabela
+        var linha = document.createElement("tr");
+        var campo_material = document.createElement("td");
+        var campo_quantidade = document.createElement("td");
+        var campo_data = document.createElement("td");
+
+        //Style
+        campo_material.className = "material-tabela";
+
+        // Cria textos
+        var texto_material = document.createTextNode(material);
+        var texto_quantidade = document.createTextNode(quantidade);
+        var texto_data = document.createTextNode(data);
+
+        // Vincula texto as linhas
+        campo_material.appendChild(texto_material);
+        campo_quantidade.appendChild(texto_quantidade);
+        campo_data.appendChild(texto_data);
+
+        // Vincula linhas ao corpo da tabela
+        linha.appendChild(campo_material);
+        linha.appendChild(campo_quantidade);
+        linha.appendChild(campo_data);
+
+        // Vincula corpo da tabela a tabela
+        document.getElementById("corpoTabela").appendChild(linha);
+        }
+    }
+    window.onload = ConstrutorTabela;
+</script>
+
+<!-- HTML -->
+<div id="grafico_1"></div>
+<div id="grafico_2"></div>
+<div id="tabela_1">
+    <table id="tabelaFrquenciaMateriais">
+        <caption style="font-size: 17px"><b>Dias que mais foram distribuídos materiais</b></caption>
+        <thead>
+            <th scope="col">Material</th>
+            <th scope="col">Quantidade</th>
+            <th scope="col">Data</th>
+        </thead>
+        <tbody id="corpoTabela">
+            
+        </tbody>
+    </table>
+</div>
+ 

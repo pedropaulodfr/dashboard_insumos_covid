@@ -1,0 +1,234 @@
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/index.css">
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Resources -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <title>Distribuição insumos aos estados</title>
+
+    <h1 id="dadosMaterialGeral" style="display: none;">{{dadosMaterialGeral}}</h1>
+    <h1 id="dadosMedicamentoRegiao" style="display: none;">{{dadosMedicamentoRegiao}}</h1>
+    <h1 id="dadosMedicamentoGeral" style="display: none;">{{dadosMedicamentoGeral}}</h1>
+    <h1 id="dadosRespiradorGeral" style="display: none;">{{dadosRespiradorGeral}}</h1>
+    <h1 id="dadosRespiradorPaises" style="display: none;">{{dadosRespiradorPaises}}</h1>
+
+    <script>
+      var dadosMateriaisGerais = document.getElementById("dadosMaterialGeral").innerHTML;
+      var dadosMedicamentosRegioes = document.getElementById("dadosMedicamentoRegiao").innerHTML;
+      var dadosMedicamentosGerais = document.getElementById("dadosMedicamentoGeral").innerHTML;
+      var dadosRespiradoresGerais = document.getElementById("dadosRespiradorGeral").innerHTML;
+      var dadosRespiradorPaises = document.getElementById("dadosRespiradorPaises").innerHTML;
+
+      dadosMateriaisGerais = JSON.parse(dadosMateriaisGerais);
+      dadosMedicamentosRegioes = JSON.parse(dadosMedicamentosRegioes);
+      dadosMedicamentosGerais = JSON.parse(dadosMedicamentosGerais);
+      dadosRespiradoresGerais = JSON.parse(dadosRespiradoresGerais);
+      dadosRespiradorPaises = JSON.parse(dadosRespiradorPaises);
+
+      var dadosGraficoMaterialGeral = [];
+      for(let i = 0; i < dadosMateriaisGerais.length; i++){
+          let material = dadosMateriaisGerais[i].Material;
+          let quantidade = dadosMateriaisGerais[i].Quantidade;
+
+          dadosGraficoMaterialGeral.push({
+              "material": material,
+              "quantidade": quantidade
+          });
+      }
+
+      var dadosGraficoMedicamentoRegiao = [];
+      for(let i = 0; i < dadosMedicamentosRegioes.length; i++){
+        let regiao = dadosMedicamentosRegioes[i].REGIAO;
+        let quantidade = dadosMedicamentosRegioes[i].QUANTIDADE;
+
+        dadosGraficoMedicamentoRegiao.push({
+            "regiao": regiao,
+            "quantidade": quantidade
+        });
+      }
+
+      var dadosGraficoMedicamentoGeral = [];
+      for(let i = 0; i < dadosMedicamentosGerais.length; i++){
+        let item = dadosMedicamentosGerais[i].ITEM;
+        let quantidade = dadosMedicamentosGerais[i].QUANTIDADE;
+
+        dadosGraficoMedicamentoGeral.push({
+            "item": item,
+            "quantidade": quantidade
+        });
+      }
+
+      var dadosGraficoRespiradorGeral = [];
+      for(let i = 0; i < dadosRespiradoresGerais.length; i++){
+        let estado = dadosRespiradoresGerais[i].UF;
+        let quantidade = dadosRespiradoresGerais[i].QUANTIDADE;
+
+        if(estado == '-'){
+            estado = '*OP';
+        };
+
+        dadosGraficoRespiradorGeral.push({
+            "estado": estado,
+            "quantidade": quantidade
+        });
+      }
+
+      var dadosGraficoRespiradorPaises = [];
+      for(let i = 0; i < dadosRespiradorPaises.length; i++){
+        let pais = dadosRespiradorPaises[i].DESTINO;
+        let quantidade = dadosRespiradorPaises[i].QUANTIDADE;
+
+        dadosGraficoRespiradorPaises.push({
+            "pais": pais,
+            "quantidade": quantidade,
+            "href": "https://paginas.fe.up.pt/~fff/Homepage/Bandeiras/Imagens/"+ pais.toLowerCase().trim() +"_ani.gif"
+        });
+      }      
+    </script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+<script src="mapas/todos_estados.js"></script>
+<script src="graficos_index/grafico_1.js"></script>
+<script src="graficos_index/grafico_2.js"></script>
+<script src="graficos_index/grafico_4.js"></script>
+<script src="graficos_index/grafico_3.js"></script>
+<script src="graficos_index/grafico_5.js"></script>
+
+  </head>
+  <body>
+    <center>
+      <div id="chart_div"></div>
+      <div id="map-load" class="spinner"></div>
+    </center>
+
+      <div id="div-check">
+        <input type="radio" id="radio-materiais" class="radio-button" name="check-bases" value="Materiais" checked>Materiais <br>
+        <input type="radio" id="radio-medicamentos" class="radio-button" name="check-bases" value="Medicamentos">Medicamentos <br>
+        <input type="radio" id="radio-respiradores" class="radio-button" name="check-bases" value="Respiradores">Respiradores
+    </div>
+    
+
+    <form action="/medicamentos" method="POST">
+      <input id="sigla" type="text" name="sigla_estado" style="display: none;">
+      <button id="submit-medicamentos" type="submit" style="display: none;"></button>
+    </form>
+
+    <form action="/materiais" method="POST">
+      <input id="sigla-estado-materiais" type="text" name="sigla_estado" style="display: none;">
+      <button id="submit-materiais" type="submit" style="display: none;"></button>
+    </form>
+    
+    <form action="/respiradores" method="POST">
+      <input id="sigla-estado-respiradores" type="text" name="sigla_estado" style="display: none;">
+      <button id="submit-respiradores" type="submit" style="display: none;"></button>
+    </form>
+
+    <script>
+      function pegarEstadoSelecionado(){
+        var estadoSelecionado = document.getElementById("select-estado").value;
+        
+        // Ação quando o estado for selecionado
+        document.getElementById('sigla').value = estadoSelecionado;
+        document.getElementById('sigla-estado-materiais').value = estadoSelecionado;
+        document.getElementById('sigla-estado-respiradores').value = estadoSelecionado;
+
+        //Verificando radio buttons
+        var radios = document.getElementsByName("check-bases");
+        for (var i = 0; i < radios.length; i++) {
+          if (radios[i].checked) {
+            console.log("Escolheu: " + radios[i].value);
+            var dadoEscolhido = radios[i].value;
+          };
+        };
+
+        if(estadoSelecionado != ''){
+          switch (dadoEscolhido) {
+          case "Materiais":
+            document.getElementById('submit-materiais').click();
+            break;
+          case "Medicamentos":
+            document.getElementById('submit-medicamentos').click();
+            break;
+          case "Respiradores":
+            document.getElementById('submit-respiradores').click();
+            break;
+          default:
+            break;
+          };
+        }else{
+          return false;
+        }
+
+        
+      }
+    </script>
+
+    <center>
+      <div id="combobox">
+        <label for="select-estado">Estado:</label>
+        <select id="select-estado" name="select-estado" onchange="pegarEstadoSelecionado();">
+          <option value="" selected>Selecione um estado</option>
+          <option value="BR-AC" >ACRE</option>
+          <option value="BR-AL">ALAGOAS</option>
+          <option value="BR-AM">AMAZONAS</option>
+          <option value="BR-AP">AMAPÁ</option>
+          <option value="BR-BA">BAHIA</option>
+          <option value="BR-CE">CEARÁ</option>
+          <option value="BR-DF">DISTRITO FEDERAL</option>
+          <option value="BR-ES">ESPÍRITO SANTO</option>
+          <option value="BR-GO">GOIÁS</option>
+          <option value="BR-MA">MARANHÃO</option>
+          <option value="BR-MT">MATO GROSSO</option>
+          <option value="BR-MS">MATO GROSSO DO SUL</option>
+          <option value="BR-MG">MINAS GERAIS</option>
+          <option value="BR-PA">PARÁ</option>
+          <option value="BR-PB">PARAÍBA</option>
+          <option value="BR-PR">PARANÁ</option>
+          <option value="BR-PE">PERNAMBUCO</option>
+          <option value="BR-PI">PIAUÍ</option>
+          <option value="BR-RJ">RIO DE JANEIRO</option>
+          <option value="BR-RN">RIO GRANDE DO NORTE</option>
+          <option value="BR-RO">RONDÔNIA</option>
+          <option value="BR-RS">RIO GRANDE DO SUL</option>
+          <option value="BR-RR">RORAIMA</option>
+          <option value="BR-SC">SANTA CATARINA</option>
+          <option value="BR-SE">SERGIPE</option>
+          <option value="BR-SP">SÃO PAULO</option>
+          <option value="BR-TO">TOCANTINS</option>
+      </select>
+      </div>
+    </center>
+
+    
+    <!-- GRÁFICOS -->
+    <br><br><br>
+        <h1 class="conteudo-principal">Insumos distribuídos aos estados</h1>
+    </br></br></br>
+    <div id="div-grafico_1">
+      <div id="grafico_1"></div>
+    </div>
+    <div id="div-grafico_2">
+      <div id="grafico_2"></div>
+    </div>
+    <div id="div-grafico_3">
+      <div id="grafico_3"></div>
+    </div>
+    <div id="div-grafico_4">
+        <div id="grafico_4"></div>
+        <small style="width:10%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+          <b>*OP - Outros países</b> - Essa informação faz referência à quantidade total de respiradores distribuídos pelo Brasil a outros países. 
+        </small>
+    </div><p><br><p><br><p><br>
+    <div id="div-grafico_5">
+      <div id="grafico_5"></div>
+    </div>
+    
+  </body>
+</html>

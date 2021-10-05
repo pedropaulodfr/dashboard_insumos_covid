@@ -1,0 +1,177 @@
+<title>Estado: {{sigla}}</title>
+
+<!-- Styles --->
+<link rel="stylesheet" href="css/medicamentos.css">
+
+<h1 id="sigla" style="display: none;">{{sigla}}</h1>
+<h1 id="dadosQuantTotMedic" style="display: none;">{{dadosQuantTotMedic}}</h1>
+<h1 id="dadosQuantMedic" style="display: none;">{{dadosQuantMedic}}</h1>
+<h1 id="dadosQuantMedicSemSol" style="display: none;">{{dadosQuantMedicSemSol}}</h1>
+<h1 id="dadosDatasDistMedic" style="display: none;">{{dadosDatasDistMedic}}</h1>
+<h1 id="dadosDatasSolMedic" style="display: none;">{{dadosDatasSolMedic}}</h1>
+<h1 id="dadosDatasMedicSemSol" style="display: none;">{{dadosDatasMedicSemSol}}</h1>
+<h1 id="dadosFreqMedic" style="display: none;">{{dadosFreqMedic}}</h1>
+
+<script>
+    var dadosQuantMedic = document.getElementById("dadosQuantMedic").innerHTML;
+    var dadosQuantMedicSemSol = document.getElementById("dadosQuantMedicSemSol").innerHTML;
+    var dadosDatasDistMedic = document.getElementById("dadosDatasDistMedic").innerHTML;
+    var dadosDatasSolMedic = document.getElementById("dadosDatasSolMedic").innerHTML;
+    var dadosDatasMedicSemSol = document.getElementById("dadosDatasMedicSemSol").innerHTML;
+    var dadosFreqMedic = document.getElementById("dadosFreqMedic").innerHTML;
+
+    dadosQuantMedic = JSON.parse(dadosQuantMedic);
+    dadosQuantMedicSemSol = JSON.parse(dadosQuantMedicSemSol);
+    dadosDatasDistMedic = JSON.parse(dadosDatasDistMedic);
+    dadosDatasSolMedic = JSON.parse(dadosDatasSolMedic);
+    dadosDatasMedicSemSol = JSON.parse(dadosDatasMedicSemSol);
+    dadosFreqMedic = JSON.parse(dadosFreqMedic);
+
+    var dadosGraficoQuantMedic = [];
+    for(let i = 0; i < dadosQuantMedic.length; i++){
+        let medicamento = dadosQuantMedic[i].ITEM;
+        let quantidade = dadosQuantMedic[i].QUANTIDADE;
+
+        dadosGraficoQuantMedic.push({
+            "medicamento": medicamento,
+            "quantidade": quantidade
+        });
+    };
+
+    var dadosGraficoQuantMedicSemSol = [];
+    for(let i = 0; i < dadosQuantMedicSemSol.length; i++){
+        let medicamento = dadosQuantMedicSemSol[i].ITEM;
+        let quantidade = dadosQuantMedicSemSol[i].QUANTIDADE;
+
+        dadosGraficoQuantMedicSemSol.push({
+            "medicamento": medicamento,
+            "quantidade": quantidade
+        });
+    };
+
+    var dadosGraficoDatasDistMedic = [];
+    for(let i = 0; i < dadosDatasDistMedic.length; i++){
+        let data = dadosDatasDistMedic[i].DATA;
+        let quantidade = dadosDatasDistMedic[i].QUANTIDADE;
+
+        dadosGraficoDatasDistMedic.push({
+            "data": data,
+            "quantidade": quantidade
+        });
+    };
+
+    var dadosGraficoDatasSolMedic = [];
+    for(let i = 0; i < dadosDatasSolMedic.length; i++){
+        let data = dadosDatasSolMedic[i].DATA;
+        let quantidade = dadosDatasSolMedic[i].QUANTIDADE;
+
+        dadosGraficoDatasSolMedic.push({
+            "data": data,
+            "quantidade": quantidade
+        });
+    };
+
+    var dadosGraficoDatasMedicSemSol = [];
+    for(let i = 0; i < dadosDatasMedicSemSol.length; i++){
+        let data = dadosDatasMedicSemSol[i].DATA;
+        let quantidade = dadosDatasMedicSemSol[i].QUANTIDADE;
+
+        dadosGraficoDatasMedicSemSol.push({
+            "data": data,
+            "quantidade": quantidade
+        });
+    };
+
+    
+</script>
+
+<div id="map"></div>
+<script src="mapas/estado.js"></script>
+
+<!-- GRÁFICOS -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/kelly.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/spiritedaway.js"></script>
+
+<script src="graficos_medicamentos/grafico_1.js"></script>
+<script src="graficos_medicamentos/grafico_2.js"></script>
+<script src="graficos_medicamentos/grafico_3.js"></script>
+<script src="graficos_medicamentos/grafico_4.js"></script>
+<script src="graficos_medicamentos/grafico_5.js"></script>
+
+<script>
+    function ConstrutorTabela(){
+        // DISPLAY QUANTIDADE TOTAL DE MEDICAMENTOS
+        var quantidadeTotalMedic = document.getElementById("dadosQuantTotMedic").innerHTML;
+        quantidadeTotalMedic = JSON.parse(quantidadeTotalMedic);
+
+        document.getElementById("displayTabela").innerHTML = (quantidadeTotalMedic[0].QUANTIDADE).toFixed(2);
+
+        // TABELA DIA QUE MAIS FOI DISTRIBUÍDO CADA MEDICAMENTO
+        for(let i = 0; i < dadosFreqMedic.length; i++){
+            let material = dadosFreqMedic[i].ITEM;
+            let quantidade = (dadosFreqMedic[i].QUANTMEDIC).toFixed(2);
+            let data = dadosFreqMedic[i].DATA;
+
+            let date = new Date(data);
+            data = (date.getDate() + 1) + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
+
+            // Cria elementos e o corpo da tabela
+            var linha = document.createElement("tr");
+            var campo_material = document.createElement("td");
+            var campo_quantidade = document.createElement("td");
+            var campo_data = document.createElement("td");
+
+            //Style
+            campo_material.className = "medicamento-tabela";
+
+            // Cria textos
+            var texto_material = document.createTextNode(material);
+            var texto_quantidade = document.createTextNode(quantidade);
+            var texto_data = document.createTextNode(data);
+
+            // Vincula texto as linhas
+            campo_material.appendChild(texto_material);
+            campo_quantidade.appendChild(texto_quantidade);
+            campo_data.appendChild(texto_data);
+
+            // Vincula linhas ao corpo da tabela
+            linha.appendChild(campo_material);
+            linha.appendChild(campo_quantidade);
+            linha.appendChild(campo_data);
+
+            // Vincula corpo da tabela a tabela
+            document.getElementById("corpoTabela").appendChild(linha);
+        }
+    }
+    window.onload = ConstrutorTabela;
+</script>
+
+<!-- HTML -->
+<div id="quantidadeDisplay">
+    <center>
+        <h1 style="font-size: 17px">Quantidade total de medicamentos distribuídos ao {{sigla}}</h1>
+        <h2 id="displayTabela"></h2>
+    </center>
+</div>
+<div id="grafico_1"></div>
+<div id="grafico_2"></div>
+<div id="grafico_3"></div>
+<div id="grafico_4"></div>
+<div id="grafico_5"></div>
+<div id="tabela_1">
+    <table id="tabelaFrquenciaMateriais">
+        <caption style="font-size: 17px"><b>Dias que mais foi distribuído cada medicamento</b></caption>
+        <thead>
+            <th scope="col">Medicamento</th>
+            <th scope="col">Quantidade</th>
+            <th scope="col">Data</th>
+        </thead>
+        <tbody id="corpoTabela">
+            
+        </tbody>
+    </table>
+</div>

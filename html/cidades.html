@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu App</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map {position: absolute; top:0; bottom:0; left:0; right: 0;}
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script type="text/javascript">
+        var map = L.map("map").setView([0, 0], 1);
+
+        var sigla = "RN";
+        
+
+        L.tileLayer("https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=b5mQAhtIScegFb2XBOc1", {
+            attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+        }).addTo(map);
+
+        var estados = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB",
+          "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SE", "SP", "TO"];
+		
+		var coordenadas = [
+        [ -8.77, -70.55],
+        [ -9.71, -35.73],
+        [ -3.07, -61.66],
+        [  1.41, -51.77],
+        [-12.96, -38.51],
+        [ -3.71, -38.54],
+        [-15.83, -47.86],
+        [-19.19, -40.34],
+        [-16.64, -49.31],
+        [ -2.55, -44.30],
+        [-12.64, -55.42],
+        [-20.51, -54.54],
+        [-18.10, -44.38],
+        [ -5.53, -52.29],
+        [ -7.06, -35.55],
+        [-24.89, -51.55],
+        [ -8.28, -35.07],
+        [ -8.28, -43.68],
+        [-22.84, -43.15],
+        [ -5.22, -36.52],
+        [-11.22, -62.80],
+        [-30.01, -51.22],
+        [1.89, -61.22],
+        [-27.33, -49.44],
+        [-10.90, -37.07],
+        [-23.55, -46.64],
+        [-10.25, -48.25]  
+        ];
+        
+        
+
+        var busca_coord_sigla = estados.indexOf('DF');
+
+        console.log(busca_coord_sigla);
+
+        L.marker(coordenadas[busca_coord_sigla]).addTo(map)
+
+        
+
+
+
+
+        /*for (let index = 0; index < coordenadas.length; index++) {
+            const element = coordenadas[index];
+            L.marker(element).addTo(map)
+            
+            
+        }*/
+
+        //L.marker().addTo(map);
+	
+		
+		
+		
+		//L.marker().addTo(map);
+        
+		
+    </script>
+</body>
+</html>
