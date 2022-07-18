@@ -41,25 +41,25 @@ abertos do Governo Federal, referentes à dispensa de insumos para o combate à 
 
 ### Tecnologias
 
-HTML
-JavaScript
-CSS
-Node.js
-Express
-Handlebars
-Body Parser
-Google Charts
-AmCharts
-Leaflet
-XAMPP
+HTML,
+JavaScript,
+CSS,
+Node.js,
+Express,
+Handlebars,
+Body Parser,
+Google Charts,
+AmCharts,
+Leaflet,
+XAMPP,
 MySQL
 
 ### Pré-requisitos
 
-Express
-Handlebars
-Body Parser
-XAMPP
+Express,
+Handlebars,
+Body Parser,
+XAMPP,
 MySQL
 
 
