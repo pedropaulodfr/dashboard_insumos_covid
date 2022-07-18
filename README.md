@@ -1,6 +1,11 @@
 # README
 
-<p align="center">O presente projeto é uma ferramenta para visualização de dados, que possibilita aos gestores da educação a análise com precisão e eficiência da situação dos alunos do curso validado, permitindo que os mesmos tenham melhorias no processo de tomadas de decisões para resolução de problemas.</p>
+<p align="center">Para o combate a pandemia causada pela Covid-19 são enviadas quantidades massivas de 
+insumos diariamente pelo Governo Federal à estados e municípios. Diante desse grande 
+quantitativo envio de itens, esse projeto foi criado visando o gerenciamento dos 
+dados gerados por tais distribuições.</p>
+
+
 
 <p align="center">
   <a href="#sobre">Sobre |</a>
@@ -18,15 +23,20 @@
 
 ### Sobre
 
-<p align="center">O presente projeto é uma ferramenta para visualização de dados, que possibilita aos gestores da educação a análise com precisão e eficiência da situação dos alunos do curso validado, permitindo que os mesmos tenham melhorias no processo de tomadas de decisões para resolução de problemas.</p>
+<p align="center">Para o combate a pandemia causada pela Covid-19 são enviadas quantidades massivas de 
+insumos diariamente pelo Governo Federal à estados e municípios. Diante desse grande 
+quantitativo envio de itens, esse projeto foi criado visando o gerenciamento dos 
+dados gerados por tais distribuições.</p>
 
-<p> Esse projeto foi proposto a fim de contribuir acerca do conhecimento dos dados relacionados à Universidade Federal Rural do Semi-Árido e compreender como está atualmente o curso de Bacharelado em Tecnologia da Informação. </p>
+<p>Este presente projeto tem por objetivo a construção de uma 
+ferramenta DASHBOARD visando evidenciar as informações advindas da base de dados 
+abertos do Governo Federal, referentes à dispensa de insumos para o combate à Covid-19, para auxiliar gestores de saúde e instituições no processo de tomada de decisões, e servir como fonte de informação à população em geral.</p>
 
 ### Funcionalidades
 
-- [x] Visualizar os gráficos contendo informações gerais do curso
-- [x] Sidebar para escolher a categoria da base de dados que pretende visualizar os detalhes
-- [x] Visualização dos gráficos da categoria selecionada
+- [x] Selecionar no mapa o estado brasileir e o tipo de informação que deseja visualizar
+- [x] Visualização dos dados gerais dos materiais, medicamentos e respiradores enviados
+- [x] Visualização da localização, gráficos e tabelas do estado selecionado
 
 
 ### Tecnologias
@@ -40,6 +50,7 @@ Handlebars
 Body Parser
 Google Charts
 AmCharts
+Leaflet
 XAMPP
 MySQL
 
@@ -48,11 +59,13 @@ MySQL
 Express
 Handlebars
 Body Parser
+XAMPP
+MySQL
 
 
 ### Artigo
 
-[Clique aqui para visualizar o artigo](http://www.conjecturas.org/index.php/edicoes/article/view/483).
+[Clique aqui para visualizar o artigo](https://www.brazilianjournals.com/index.php/BRJD/article/view/35047).
 
 
 ### Autor
@@ -62,7 +75,7 @@ Body Parser
 
 
 <h1 align="center">
-  <img alt="Readme" src="https://user-images.githubusercontent.com/29920024/179569540-e2d2c0a3-9d82-4cf6-a5ec-767cfddf0d39.png" width="550" height="270" />
+  <img alt="Readme" src="https://user-images.githubusercontent.com/29920024/179580319-044371be-ff85-45ab-8d46-4b9bb0bf72fa.png" width="500" height="250" />
 </h1>
 
 
